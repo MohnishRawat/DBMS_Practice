@@ -1,0 +1,157 @@
+-- Q1. Salary > 2000 and Commission > 200
+SELECT *
+FROM emp
+WHERE SAL > 2000
+  AND COMM > 200;
+
+-- Q2. Clerk or Salary > 2000
+SELECT *
+FROM emp
+WHERE JOB = 'CLERK'
+   OR SAL > 2000;
+
+-- Q3. Salary in Given List
+SELECT *
+FROM emp
+WHERE SAL IN (1250,1100,2850);
+
+-- Q4. Salary Between 1250 and 2850
+SELECT *
+FROM emp
+WHERE SAL BETWEEN 1250 AND 2850;
+
+-- Q5. Name Ends with AS
+SELECT *
+FROM emp
+WHERE ENAME LIKE '%AS';
+
+-- Q6. Name Ends with AS (REGEXP)
+SELECT *
+FROM emp
+WHERE ENAME REGEXP 'AS$';
+
+-- Q7. Job Starts with C and Ends with K
+SELECT *
+FROM emp
+WHERE JOB REGEXP '^C.*K$';
+
+-- Q8. Name Starts with C and Ends with K
+SELECT *
+FROM emp
+WHERE ENAME LIKE 'C%K';
+
+-- Q9. Job Starts with C and Ends with K
+SELECT *
+FROM emp
+WHERE JOB LIKE 'C%K';
+
+-- Q10. Job Matches SALESMAN Pattern
+SELECT *
+FROM emp
+WHERE JOB LIKE '__L%M__';
+
+-- Q11. Salary Not in Given List
+SELECT *
+FROM emp
+WHERE SAL NOT IN (1250,1100,2850);
+
+-- Q12. Salary Not Between 1250 and 2850
+SELECT *
+FROM emp
+WHERE SAL NOT BETWEEN 1250 AND 2850;
+
+-- Q13. Job Matches CLERK Pattern
+SELECT *
+FROM emp
+WHERE JOB LIKE 'C%_E%K';
+
+-- Q14. Commission is NULL
+SELECT *
+FROM emp
+WHERE COMM IS NULL;
+
+-- Q15. Salary NULL and Name Starts with S
+SELECT *
+FROM emp
+WHERE SAL IS NULL
+  AND ENAME LIKE 'S%';
+
+-- Q16. Job Length at Least 5
+SELECT *
+FROM emp
+WHERE JOB REGEXP '.{5}';
+
+-- Q17. Job Starts with A
+SELECT *
+FROM emp
+WHERE JOB REGEXP '^A.{5}';
+
+-- Q18. Name Starts with A and Job Length >= 5
+SELECT *
+FROM emp
+WHERE ENAME REGEXP '^A'
+  AND JOB REGEXP '.{5}';
+
+-- Q19. Name Starts with A and Job Length Exactly 5
+SELECT *
+FROM emp
+WHERE ENAME REGEXP '^A'
+  AND JOB REGEXP '^.{5}$';
+
+-- Q20. Employees in Departments 20, 30, 40
+SELECT ENAME, SAL, DEPTNO
+FROM emp
+WHERE DEPTNO IN (20,30,40);
+
+-- Q21. Calculate Total Salary
+SELECT ENAME,
+       SAL,
+       DEPTNO,
+       SAL + IFNULL(COMM,0) + SAL*0.10 AS TOTALSALARY
+FROM emp;
+
+-- Q22. Hired Before 1986 and Salary Between 1200 and 2500
+SELECT ENAME,
+       JOB,
+       HIREDATE,
+       SAL
+FROM emp
+WHERE HIREDATE < '1986-01-01'
+  AND SAL BETWEEN 1200 AND 2500;
+
+-- Q23. Employees Managed by 7698
+SELECT EMPNO,
+       ENAME,
+       DEPTNO
+FROM emp
+WHERE MGR = 7698;
+
+-- Q24. Employees in Departments 10 and 30
+SELECT ENAME,
+       JOB,
+       SAL
+FROM emp
+WHERE DEPTNO IN (10,30);
+
+-- Q25. Employees Who Are Not Managers
+SELECT *
+FROM emp
+WHERE JOB != 'MANAGER';
+
+-- Q26. Hired Between 1981 and March 1983
+SELECT ENAME,
+       DEPTNO,
+       HIREDATE
+FROM emp
+WHERE HIREDATE BETWEEN '1981-01-01'
+                   AND '1983-03-31';
+
+-- Q27. Job Contains AGE
+SELECT *
+FROM emp
+WHERE JOB REGEXP 'AGE';
+
+-- Q28. Name Pattern Using REGEXP
+SELECT *
+FROM emp
+WHERE ENAME REGEXP '^A.*
