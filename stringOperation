@@ -1,0 +1,151 @@
+-- 1. Generate official email IDs using employee name and job
+SELECT ename,
+       job,
+       CONCAT(SUBSTR(ename,2,3),
+              SUBSTR(job,2,3),
+              '@mycompany.com')
+FROM emp;
+
+-- 2. Display employee experience in years
+SELECT empno,
+       ename,
+       deptno,
+       TIMESTAMPDIFF(YEAR,hiredate,CURDATE())
+FROM emp;
+
+-- 3. Display employees who joined on the 3rd day of any month
+SELECT empno,
+       ename,
+       deptno
+FROM emp
+WHERE DAY(hiredate)=3;
+
+-- 4. Display employees hired between 1981 and 1983
+SELECT *
+FROM emp
+WHERE YEAR(hiredate)
+BETWEEN 1981 AND 1983;
+
+-- 5. Display employee name and department number in a single column
+SELECT ename,
+       deptno,
+       CONCAT(ename,', ',deptno) empinfo
+FROM emp;
+
+-- 6. Display department-wise maximum, minimum, total and average salary
+SELECT deptno,
+       ROUND(MAX(sal),0) MAX,
+       ROUND(MIN(sal),0) MIN,
+       ROUND(SUM(sal),0) TOTAL,
+       ROUND(AVG(sal),0) AVERAGE
+FROM emp
+GROUP BY deptno;
+
+-- 7. Count department-wise managers
+SELECT deptno,
+       COUNT(job) AS Total_Managers
+FROM emp
+WHERE job='MANAGER'
+GROUP BY deptno;
+
+-- 8. Display departments where total salary exceeds 20000 excluding managers
+SELECT deptno,
+       SUM(sal) AS Salary_Total
+FROM emp
+WHERE job!='MANAGER'
+GROUP BY deptno
+HAVING SUM(sal)>20000;
+
+-- 9. Display clerks having commission
+SELECT ename,
+       hiredate,
+       CURDATE()
+FROM emp
+WHERE job='CLERK'
+AND comm IS NOT NULL
+AND comm>0;
+
+-- 10. Display clerk hire date in DD/MM/YY format
+SELECT ename,
+       DATE_FORMAT(hiredate,'%d/%m/%y')
+FROM emp
+WHERE job='CLERK'
+AND comm>0;
+
+-- 11. Display date before 3 months from today
+SELECT DATE_SUB(CURDATE(),
+                INTERVAL 3 MONTH);
+
+-- 12. Display last day of month before 3 months
+SELECT LAST_DAY(
+       DATE_SUB(CURDATE(),
+                INTERVAL 3 MONTH)
+       );
+
+-- 13. Display employees who joined on Monday
+SELECT hiredate,
+       DATE_FORMAT(hiredate,'%W') DAYS
+FROM emp
+WHERE DAYNAME(hiredate)='Monday';
+
+-- 14. Display current date in "October 10, 2026" format
+SELECT DATE_FORMAT(
+       NOW(),
+       '%M %d, %Y'
+       );
+
+-- 15. Display complete formatted system date and time
+SELECT DATE_FORMAT(
+       NOW(),
+       '%W %D %M %Y %r'
+       );
+
+-- 16. Display employees hired in June
+SELECT *
+FROM emp
+WHERE MONTHNAME(hiredate)='June';
+
+-- 17. Display joining year-wise employee count
+SELECT YEAR(hiredate),
+       COUNT(*)
+FROM emp
+GROUP BY YEAR(hiredate);
+
+-- 18. Display employees hired in 1981
+SELECT ename
+FROM emp
+WHERE YEAR(hiredate)=1981;
+
+-- 19. Display employees with more than 5 years experience
+SELECT ename
+FROM emp
+WHERE TIMESTAMPDIFF(
+      YEAR,
+      hiredate,
+      CURDATE()
+      ) > 5;
+
+-- 20. Display employee name, hire date and experience
+SELECT ename,
+       hiredate,
+       TIMESTAMPDIFF(
+       YEAR,
+       hiredate,
+       CURDATE()
+       ) AS experience
+FROM emp;
+
+-- 21. Display department-wise employee count by joining year
+SELECT deptno,
+       YEAR(hiredate),
+       COUNT(*)
+FROM emp
+GROUP BY deptno,
+         YEAR(hiredate);
+
+-- 22. Find Nth Highest Salary
+SELECT CONCAT(first_name,' ',last_name) AS name,
+       salary
+FROM worker
+ORDER BY salary DESC
+LIMIT N-1,1;
